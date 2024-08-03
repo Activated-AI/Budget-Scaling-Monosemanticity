@@ -4,6 +4,7 @@
 - My smaller scale implementation of Anthropic's Scaling Monosemanticity
 - Costs less then $10 of compute to train a small LLM and SAE on an RTX 4090, only takes a few hrs
 - Creates thousands of interpretable features
+- Warning: work in progress, messy code
 ## Background
 A few months ago, I read [Antrhopic's Scaling Monosemanticity](https://transformer-circuits.pub/2024/scaling-monosemanticity/) blog post, where they described how they extracted tens of millions of abstract, interpretable features from Claude 3 Sonnet, using a sparse autoencoder (SAE). This allowed them to better explain how the model worked and better control it.
 
