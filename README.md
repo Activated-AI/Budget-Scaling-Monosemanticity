@@ -17,7 +17,13 @@ This dataset of a few million synthetically generated children's stories is very
 Due to the relatively low variability of TinyStories and small LLM, the SAE was able to model the residual stream fairly well (R2 of 77%, about 20 active features for a given embedding) compared to Anthropic's full-scale implementation (R^2 of 65%, 300 active features). More importantly, the features were actually interpretable! For example, here are some of the top activating tokens over a small subset of the data, for feature 93:
 
 > there was a fish named Nemo. Nemo loved to swim in the
+
+...
+
 > to the beach and asked her mom if she could swim in the ocean. Her mom said to be
+
+...
+
 > One day, the octopus and the fish found a big jug. They wanted to pour
 
 
