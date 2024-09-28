@@ -210,6 +210,13 @@ def main():
     # Process residuals
     topk_idxs_per_token, topk_strengths_per_token, token_idxs, context_window_starts = processor.process_residuals(residuals_path)
 
+    unique, counts = torch.unique(topk_idxs_per_token.view(-1), return_counts=True)
+    print("frequency of top 10 SAE features", (torch.sort(counts.view(-1), descending=True)[0][0:10]/len(token_idxs)).tolist())
+
+    top_features = topk_idxs_per_token[:, 0].view(-1)
+    unique, counts = torch.unique(top_features, return_counts=True)
+    print("frequency of top SAE features in top 1", torch.sort(counts, descending=True)[0][0:10]/torch.numel(top_features))
+
     # Select a feature index
     if args.feature_idx is not None:
         feature_idx = args.feature_idx

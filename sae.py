@@ -18,6 +18,7 @@ class TopKSAEConfig:
     topk: int = 24
     lr: int = 1e-3
     batch_size: int = 32
+    latent_bias: bool = True
 
 
 class TopKSAE(nn.Module):
@@ -29,7 +30,7 @@ class TopKSAE(nn.Module):
         self.n_features = config.n_features
         self.topk = config.topk
 
-        self.encode = nn.Linear(self.embedding_size, self.n_features, bias=True)
+        self.encode = nn.Linear(self.embedding_size, self.n_features, bias=config.latent_bias)
         self.decode = nn.Linear(self.n_features, self.embedding_size, bias=False)
         self.bias = nn.Parameter(torch.zeros(self.embedding_size))
 
@@ -38,8 +39,8 @@ class TopKSAE(nn.Module):
         direction_lengths = direction_lengths.unsqueeze(-1)
         self.encode.weight.data = F.normalize(self.encode.weight.data, p=2, dim=-1) * direction_lengths
 
-        # Initialize decode weights as the transpose of encode weights
-        self.decode.weight.data = self.encode.weight.data.t()
+        # Initialize decode weights as the transpose of encode weights, but ensure they are independent
+        self.decode.weight.data.copy_(self.encode.weight.data.t().clone())
 
     def keep_topk(self, tensor, k):
         values, indices = torch.topk(tensor, k)

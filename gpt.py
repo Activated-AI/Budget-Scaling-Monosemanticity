@@ -63,7 +63,6 @@ class Logger():
 
 config = GPTConfig()
 logger = Logger(os.path.join(config.expt_name), config.smoke_test) # open for writing to clear the file        
-logger.log(str(config))
 
 
 class CausalSelfAttention(nn.Module):
@@ -100,6 +99,7 @@ class MLP(nn.Module):
     def __init__(self, config):
         super().__init__()
         ff_exp = int(config.feed_forward_factor * config.n_embd)
+        ff_exp -= ff_exp % 64
         assert ff_exp % 64 == 0
         self.c_fc    = nn.Linear(config.n_embd, ff_exp)
         self.gelu    = nn.GELU(approximate='tanh')
